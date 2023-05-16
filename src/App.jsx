@@ -1,5 +1,9 @@
 import Product from "./components/Product";
+import Cart from "./components/Cart";
 import { FaSpotify, FaYoutube, FaFacebook } from "react-icons/fa";
+
+import { useState } from "react";
+
 const products = [
   {
     title: "Colors",
@@ -35,11 +39,23 @@ const products = [
 ];
 
 function App() {
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <>
-      <header className="text-5xl text-white text-center p-4 bg-gray-500">
-        <h1>The Generics</h1>
+      <header className="p-4 bg-gray-500">
+        <h1 className="text-5xl text-white text-center">The Generics</h1>
+        <button
+          className="bg-red-500 border rounded px-2 text-white absolute right-1 top-1"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          Cart
+        </button>
       </header>
+
+      <div className="fixed right-0 w-64 h-64">
+        {isOpen && <Cart products={products} />}
+      </div>
+
       <main className="w-2/3 mx-auto mt-5 mb-5">
         <div className="grid grid-cols-1 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-1 gap-4">
           {products.map((product) => (
@@ -51,9 +67,9 @@ function App() {
         <div className="flex justify-evenly">
           <div>The Generics</div>
           <div className="flex">
-            <FaSpotify className="m-2" />
-            <FaYoutube className="m-2" />
-            <FaFacebook className="m-2" />
+            <FaSpotify className="m-2 cursor-pointer hover:bg-green-500" />
+            <FaYoutube className="m-2 cursor-pointer hover:bg-red-500" />
+            <FaFacebook className="m-2 cursor-pointer hover:bg-blue-500" />
           </div>
         </div>
       </footer>
