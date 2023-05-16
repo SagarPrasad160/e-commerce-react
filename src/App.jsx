@@ -1,5 +1,7 @@
 import Product from "./components/Product";
 import Header from "./components/Header";
+import NavBar from "./components/NavBar";
+import About from "./pages/About";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -7,6 +9,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { CartProvider } from "./context/cartContext";
 
 import { FaSpotify, FaYoutube, FaFacebook } from "react-icons/fa";
+
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 const products = [
   {
@@ -46,15 +50,25 @@ function App() {
   return (
     <>
       <CartProvider>
-        <Header />
-
-        <main className="w-2/3 mx-auto mt-5 mb-5">
-          <div className="grid grid-cols-1 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-1 gap-4">
-            {products.map((product) => (
-              <Product product={product} key={product.title} />
-            ))}
-          </div>
-        </main>
+        <Router>
+          <NavBar />
+          <Header />
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <main className="w-2/3 mx-auto mt-5 mb-5">
+                  <div className="grid grid-cols-1 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-1 gap-4">
+                    {products.map((product) => (
+                      <Product product={product} key={product.title} />
+                    ))}
+                  </div>
+                </main>
+              }
+            />
+            <Route path="/about" element={<About />} />
+          </Routes>
+        </Router>
         <footer className="font-bold text-4xl text-white bg-blue-400 p-4 text-center">
           <div className="flex justify-evenly">
             <div>The Generics</div>

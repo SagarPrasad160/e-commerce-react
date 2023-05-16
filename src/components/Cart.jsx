@@ -4,13 +4,21 @@ import { useContext } from "react";
 
 import cartContext from "../context/cartContext";
 
-function Cart() {
+function Cart({ setIsOpen }) {
   const { cart, removeFromCart } = useContext(cartContext);
 
   if (cart.length === 0) {
     return (
-      <div className="border p-4 text-xl font-bold">
-        Item you add will show here
+      <div className="border p-4">
+        <div className="text-xl font-bold text-center">
+          Items you add will show up here
+        </div>
+        <button
+          className="absolute top-1 right-1 font-semibold"
+          onClick={() => setIsOpen(false)}
+        >
+          X
+        </button>
       </div>
     );
   }
@@ -40,13 +48,7 @@ function Cart() {
 }
 
 Cart.propTypes = {
-  products: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      imageUrl: PropTypes.string.isRequired,
-    })
-  ).isRequired,
+  setIsOpen: PropTypes.func.isRequired,
 };
 
 export default Cart;

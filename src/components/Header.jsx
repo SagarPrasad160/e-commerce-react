@@ -17,7 +17,7 @@ function Header() {
   return (
     <div>
       {" "}
-      <header className="p-4 bg-gray-500">
+      <header className="p-4 bg-neutral-500">
         <h1 className="text-5xl text-white text-center">The Generics</h1>
         <button
           className="bg-red-500 border rounded px-2 text-white absolute right-1 top-1"
@@ -29,7 +29,9 @@ function Header() {
           </div>
         </button>
       </header>
-      <div className="fixed right-0 w-64 h-64">{isOpen && <Cart />}</div>
+      <div className="fixed right-0 w-64 h-64">
+        {isOpen && <Cart setIsOpen={setIsOpen} />}
+      </div>
     </div>
   );
 }
