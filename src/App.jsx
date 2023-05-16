@@ -2,6 +2,7 @@ import Product from "./components/Product";
 import Header from "./components/Header";
 import NavBar from "./components/NavBar";
 import About from "./pages/About";
+import Home from "./pages/Home";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -67,6 +68,7 @@ function App() {
               }
             />
             <Route path="/about" element={<About />} />
+            <Route path="/home" element={<Home />} />
           </Routes>
         </Router>
         <footer className="font-bold text-4xl text-white bg-blue-400 p-4 text-center">
