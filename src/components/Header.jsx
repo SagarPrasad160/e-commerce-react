@@ -17,8 +17,10 @@ function Header() {
   return (
     <div>
       {" "}
-      <header className="p-4 bg-neutral-500">
-        <h1 className="text-5xl text-white text-center">The Generics</h1>
+      <header className="p-5 bg-neutral-500">
+        <h1 className="text-5xl font-serif text-white text-center">
+          The Generics
+        </h1>
         <button
           className="bg-red-500 border rounded px-2 text-white absolute right-1 top-1"
           onClick={() => setIsOpen(!isOpen)}

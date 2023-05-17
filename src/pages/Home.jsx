@@ -41,7 +41,7 @@ function Home() {
       {tours.map((tour, index) => {
         return (
           <div
-            className="w-96 border-b shadow p-2  w-6/12 mx-auto   m-2 flex justify-evenly"
+            className="w-1/2 border-b shadow p-2  w-6/12 mx-auto   m-2 flex justify-evenly"
             key={index}
           >
             <div className="font-semibold text-lg">{tour.date}</div>

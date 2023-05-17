@@ -1,6 +1,6 @@
 function About() {
   return (
-    <div className="flex items-center  ">
+    <div className="flex items-center">
       <div className="w-4/5 py-5  mx-auto flex">
         <div className="w-64 mr-5">
           <img

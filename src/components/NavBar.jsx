@@ -12,6 +12,10 @@ function NavBar() {
             <NavLink to="/about">About</NavLink>
           </li>
           <li className="mx-4 cursor-pointer text-lg">
+            <NavLink to="/contact">Contact Us</NavLink>
+          </li>
+
+          <li className="mx-4 cursor-pointer text-lg">
             <NavLink to="/">Store</NavLink>
           </li>
         </ul>
