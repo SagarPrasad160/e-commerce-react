@@ -4,7 +4,7 @@ import { useContext } from "react";
 
 import cartContext from "../context/cartContext";
 
-
+import { Link } from "react-router-dom";
 
 function Product({ product }) {
   const { addToCart } = useContext(cartContext);
@@ -16,7 +16,9 @@ function Product({ product }) {
     <div className="mx-auto flex flex-col p-4 shadow">
       <div className="font-bold text-xl mb-4 text-center">{product.title}</div>
       <div className="h-64 w-64">
-        <img src={product.imageUrl} alt="product" />
+        <Link to={product.title}>
+          <img src={product.imageUrl} alt="product" />
+        </Link>
       </div>
       <div className="flex justify-between mt-2 cursor-pointer">
         <span className="font-semibold">${product.price}</span>

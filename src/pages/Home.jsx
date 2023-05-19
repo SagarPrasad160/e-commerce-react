@@ -44,9 +44,9 @@ function Home() {
             className="w-1/2 border-b shadow p-2  w-6/12 mx-auto   m-2 flex justify-evenly"
             key={index}
           >
-            <div className="font-semibold text-lg">{tour.date}</div>
-            <div>{tour.city}</div>
-            <div>{tour.place}</div>
+            <div className="font-semibold text-lg ">{tour.date}</div>
+            <div className=" font-semibold tracking-wider">{tour.city}</div>
+            <div className=" font-semibold">{tour.place}</div>
             <button className="bg-blue-400 text-white font-semibold rounded-md p-2">
               Buy Tickets
             </button>
