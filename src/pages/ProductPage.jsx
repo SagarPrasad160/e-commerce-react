@@ -55,7 +55,7 @@ function ProductPage() {
       </div>
       <div className="flex justify-evenly my-5">
         {productToShow.reviews.map((review) => (
-          <div className="m-2 border w-64 p-2" key={review.id}>
+          <div className="m-2 border w-64 p-2npm" key={review.id}>
             {review.comment} ~{" "}
             <span className="font-semibold">{review.author}</span>
           </div>

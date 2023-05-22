@@ -5,6 +5,8 @@ import Cart from "./Cart";
 
 import { FaShoppingCart } from "react-icons/fa";
 
+import { Link } from "react-router-dom";
+
 function Header() {
   const { cart } = useContext(cartContext);
   const [isOpen, setIsOpen] = useState(false);
@@ -34,6 +36,11 @@ function Header() {
       <div className="fixed right-0 w-64 h-64">
         {isOpen && <Cart setIsOpen={setIsOpen} />}
       </div>
+      <Link to="/auth">
+        <div className="absolute right-36 bg-blue-400 top-2 px-2 rounded cursor-pointer hover:bg-blue-300 border">
+          <div className="font-bold text-xl text-white">Log In</div>
+        </div>
+      </Link>
     </div>
   );
 }
