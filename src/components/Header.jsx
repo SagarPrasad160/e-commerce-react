@@ -19,7 +19,9 @@ function Header() {
     setCartLength(cart.length);
   }, [cart]);
 
-  const { handleLogOut } = useContext(authContext);
+  const { userLog, handleLogOut } = useContext(authContext);
+
+  const user = userLog.user;
 
   const handleClick = async () => {
     try {
@@ -42,7 +44,7 @@ function Header() {
           className="bg-red-500 border rounded px-2 text-white absolute right-1 top-1"
           onClick={() => setIsOpen(!isOpen)}
         >
-          <div className="flex p-1">
+          <div className="flex p-1" hidden={!user}>
             <p className="ml-1">Cart {cartLength} </p>
             <FaShoppingCart className="m-1" />
           </div>

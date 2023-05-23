@@ -28,14 +28,15 @@ export function CartProvider({ children }) {
     if (userLog.user) {
       ref = query(ref, where("uid", "==", userLog.user.uid));
       console.log("user");
-    }
-    onSnapshot(ref, (snapshot) => {
-      let results = [];
-      snapshot.docs.forEach((doc) => {
-        results.push({ id: doc.id, ...doc.data() });
+
+      onSnapshot(ref, (snapshot) => {
+        let results = [];
+        snapshot.docs.forEach((doc) => {
+          results.push({ id: doc.id, ...doc.data() });
+        });
+        setCart(results);
       });
-      setCart(results);
-    });
+    }
   }, [userLog]);
 
   const addToCart = async (item) => {
