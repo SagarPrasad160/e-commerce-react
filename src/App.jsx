@@ -1,4 +1,4 @@
-import Product from "./components/Product";
+import ProductList from "./components/ProductList";
 import Header from "./components/Header";
 import NavBar from "./components/NavBar";
 import About from "./pages/About";
@@ -29,18 +29,7 @@ function App() {
             <NavBar />
             <Header />
             <Routes>
-              <Route
-                path="/"
-                element={
-                  <main className="w-2/3 mx-auto mt-5 mb-5">
-                    <div className="grid grid-cols-1 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-1 gap-4">
-                      {products.map((product) => (
-                        <Product product={product} key={product.title} />
-                      ))}
-                    </div>
-                  </main>
-                }
-              />
+              <Route path="/" element={<ProductList products={products} />} />
               <Route path="/about" element={<About />} />
               <Route path="/home" element={<Home />} />
               <Route path="/contact" element={<Contact />} />

@@ -1,5 +1,8 @@
 import { useState, useContext } from "react";
 import authContext from "../context/authContext";
+
+import { useNavigate } from "react-router";
+
 function AuthForm() {
   const [isLogin, setIsLogin] = useState(true);
   const [sendingReq, setSendingReq] = useState(false);
@@ -7,6 +10,9 @@ function AuthForm() {
     email: "",
     password: "",
   });
+
+  const navigate = useNavigate();
+
   const { handleLogIn } = useContext(authContext);
 
   const { email, password } = formData;
@@ -44,6 +50,7 @@ function AuthForm() {
       if (response.ok) {
         const data = await response.json();
         handleLogIn(data.idToken);
+        navigate("/");
         console.log(data);
       } else {
         const data = await response.json();
