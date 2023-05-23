@@ -10,6 +10,8 @@ import { Link } from "react-router-dom";
 import { auth } from "../firestore/config";
 import { signOut } from "firebase/auth";
 
+import { Navigate } from "react-router-dom";
+
 function Header() {
   const { cart } = useContext(cartContext);
   const [isOpen, setIsOpen] = useState(false);
@@ -27,7 +29,7 @@ function Header() {
     try {
       await signOut(auth);
       handleLogOut();
-      alert("Signed Out!");
+      <Navigate to="/auth" />;
     } catch (error) {
       alert(error);
     }

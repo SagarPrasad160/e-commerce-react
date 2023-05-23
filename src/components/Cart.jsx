@@ -3,13 +3,15 @@ import PropTypes from "prop-types";
 import { useContext } from "react";
 
 import cartContext from "../context/cartContext";
+import authContext from "../context/authContext";
 
 function Cart({ setIsOpen }) {
   const { cart, removeFromCart } = useContext(cartContext);
+  const { userLog } = useContext(authContext);
 
   if (cart.length === 0) {
     return (
-      <div className="border p-4">
+      <div className="border p-4" hidden={!userLog.user}>
         <div className="text-xl font-bold text-center">
           Items you add will show up here
         </div>
@@ -24,7 +26,7 @@ function Cart({ setIsOpen }) {
   }
 
   return (
-    <div className="border p-4">
+    <div className="border p-4" hidden={!userLog.user}>
       <div className="font-bold text-xl text-center">Cart</div>
       {cart.map((product) => (
         <div key={product.id} className="flex justify-between border-b-2 m-1">

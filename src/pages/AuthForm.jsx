@@ -98,7 +98,7 @@ function AuthForm() {
         />
         <button
           type="submit"
-          className="w-1/2 mx-auto bg-blue-400 h-12 rounded text-white font-bold text-xl"
+          className="w-1/2 mx-auto bg-blue-400 h-12 rounded text-white font-bold text-xl active:scale-95"
         >
           {isLogin ? "Log In" : "Create"}
         </button>
