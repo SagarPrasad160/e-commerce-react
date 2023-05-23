@@ -10,31 +10,50 @@ import AuthForm from "./pages/AuthForm";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { CartProvider } from "./context/cartContext";
-
 import { FaSpotify, FaYoutube, FaFacebook } from "react-icons/fa";
 
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 
 import { products } from "./data";
 
-import { AuthProvider } from "./context/authContext";
+import { useContext } from "react";
+
+import authContext from "./context/authContext";
 
 function App() {
+  const { userLog } = useContext(authContext);
+  const { user, isAuthReady } = userLog;
   return (
     <>
-      <AuthProvider>
-        <CartProvider>
+      {isAuthReady && (
+        <>
           <Router>
             <NavBar />
             <Header />
             <Routes>
-              <Route path="/" element={<ProductList products={products} />} />
+              <Route
+                path="/"
+                element={
+                  user ? (
+                    <ProductList products={products} />
+                  ) : (
+                    <Navigate to="/auth" />
+                  )
+                }
+              />
               <Route path="/about" element={<About />} />
               <Route path="/home" element={<Home />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/:product" element={<ProductPage />} />
-              <Route path="/auth" element={<AuthForm />} />
+              <Route
+                path="/auth"
+                element={!user ? <AuthForm /> : <Navigate to="/" />}
+              />
             </Routes>
           </Router>
           <footer className="font-bold text-4xl text-white bg-blue-400 p-4 text-center ">
@@ -48,8 +67,8 @@ function App() {
             </div>
           </footer>
           <ToastContainer />
-        </CartProvider>
-      </AuthProvider>
+        </>
+      )}
     </>
   );
 }
