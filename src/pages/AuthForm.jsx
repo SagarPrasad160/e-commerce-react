@@ -1,17 +1,21 @@
 import { useState, useContext } from "react";
+
 import authContext from "../context/authContext";
 
-import { useNavigate } from "react-router";
+import { auth } from "../firestore/config";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 
 function AuthForm() {
   const [isLogin, setIsLogin] = useState(true);
-  const [sendingReq, setSendingReq] = useState(false);
+
+  const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-
-  const navigate = useNavigate();
 
   const { handleLogIn } = useContext(authContext);
 
@@ -31,50 +35,35 @@ function AuthForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSendingReq(true);
-    if (isLogin) {
-      const response = await fetch(
-        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAXmI1MuvSeNwcSdahEZY4e6l97BdaiBhk",
-        {
-          method: "POST",
-          body: JSON.stringify({
-            email,
-            password,
-            returnSecureToken: true,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      if (response.ok) {
-        const data = await response.json();
-        handleLogIn(data.idToken);
-        navigate("/");
-        console.log(data);
-      } else {
-        const data = await response.json();
-        alert(data.error.message);
+    setError(null);
+    if (!isLogin) {
+      try {
+        const response = await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+
+        handleLogIn(response.user);
+        console.log(response.user);
+      } catch (error) {
+        setError(error);
       }
     } else {
-      const response = await fetch(
-        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAXmI1MuvSeNwcSdahEZY4e6l97BdaiBhk",
-        {
-          method: "POST",
-          body: JSON.stringify({
-            email,
-            password,
-            returnSecureToken: true,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      const data = await response.json();
-      console.log(data);
+      try {
+        const response = await signInWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+        handleLogIn(response.user);
+        console.log(response.user);
+      } catch (error) {
+        setError(error);
+        console.log(error);
+      }
     }
-    setSendingReq(false);
+
     setFormData({
       email: "",
       password: "",
@@ -111,14 +100,14 @@ function AuthForm() {
           type="submit"
           className="w-1/2 mx-auto bg-blue-400 h-12 rounded text-white font-bold text-xl"
         >
-          Log In
+          {isLogin ? "Log In" : "Create"}
         </button>
-        {sendingReq && <p className="text-center">Sending Request</p>}
         <button onClick={handleClick}>
           {isLogin
             ? "Don't have an account? Sign up instead."
             : "Have an account,login instead."}
         </button>
+        {error && <p className="text-center text-red-400">{error.message}</p>}
       </form>
     </div>
   );

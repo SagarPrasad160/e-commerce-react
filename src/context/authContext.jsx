@@ -1,25 +1,35 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
 const authContext = createContext();
 
+import { auth } from "../firestore/config";
+import { onAuthStateChanged } from "firebase/auth";
+
 export const AuthProvider = ({ children }) => {
-  // store token in state to identify the user currently logged in
-  const [token, setToken] = useState(null);
+  const [userLog, setUserLog] = useState({
+    user: null,
+    isAuthReady: false,
+  });
 
-  const isLoggedIn = !!token;
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, (user) => {
+      setUserLog({ user, isAuthReady: true });
+      unsub();
+    });
+  }, []);
 
-  const handleLogIn = (token) => {
-    setToken(token);
+  const handleLogIn = (payload) => {
+    setUserLog({ ...userLog, user: payload });
   };
   const handleLogOut = () => {
-    setToken(null);
+    setUserLog({ ...userLog, user: null });
   };
 
+  console.log("AuthContext state:", userLog);
+
   return (
-    <authContext.Provider
-      value={{ token, handleLogIn, handleLogOut, isLoggedIn }}
-    >
+    <authContext.Provider value={{ userLog, handleLogIn, handleLogOut }}>
       {children}
     </authContext.Provider>
   );

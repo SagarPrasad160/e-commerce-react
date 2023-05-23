@@ -1,11 +1,14 @@
 import { useContext, useEffect, useState } from "react";
 import cartContext from "../context/cartContext";
-
+import authContext from "../context/authContext";
 import Cart from "./Cart";
 
 import { FaShoppingCart } from "react-icons/fa";
 
 import { Link } from "react-router-dom";
+
+import { auth } from "../firestore/config";
+import { signOut } from "firebase/auth";
 
 function Header() {
   const { cart } = useContext(cartContext);
@@ -15,6 +18,18 @@ function Header() {
   useEffect(() => {
     setCartLength(cart.length);
   }, [cart]);
+
+  const { handleLogOut } = useContext(authContext);
+
+  const handleClick = async () => {
+    try {
+      await signOut(auth);
+      handleLogOut();
+      alert("Signed Out!");
+    } catch (error) {
+      alert(error);
+    }
+  };
 
   return (
     <div>
@@ -39,6 +54,12 @@ function Header() {
       <Link to="/auth">
         <div className="absolute right-36 bg-blue-400 top-2 px-2 rounded cursor-pointer hover:bg-blue-300 border">
           <div className="font-bold text-xl text-white">Log In</div>
+        </div>
+        <div
+          className="absolute right-64 bg-blue-400 top-2 px-2 rounded cursor-pointer hover:bg-blue-300 border"
+          onClick={handleClick}
+        >
+          <div className="font-bold text-xl text-white">Log Out</div>
         </div>
       </Link>
     </div>
