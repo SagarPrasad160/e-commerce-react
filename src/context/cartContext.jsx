@@ -11,6 +11,8 @@ import {
   onSnapshot,
   addDoc,
   deleteDoc,
+  query,
+  where,
 } from "firebase/firestore";
 
 const cartContext = createContext();
@@ -18,8 +20,15 @@ const cartContext = createContext();
 export function CartProvider({ children }) {
   const [cart, setCart] = useState([]);
 
+  const { userLog } = useContext(authContext);
+
   useEffect(() => {
-    const ref = collection(db, "carts");
+    let ref;
+    ref = collection(db, "carts");
+    if (userLog.user) {
+      ref = query(ref, where("uid", "==", userLog.user.uid));
+      console.log("user");
+    }
     onSnapshot(ref, (snapshot) => {
       let results = [];
       snapshot.docs.forEach((doc) => {
@@ -27,9 +36,7 @@ export function CartProvider({ children }) {
       });
       setCart(results);
     });
-  }, []);
-
-  const { userLog } = useContext(authContext);
+  }, [userLog]);
 
   const addToCart = async (item) => {
     const ref = collection(db, "carts");
